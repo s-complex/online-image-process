@@ -1,3 +1,5 @@
+import { Form } from "@/components/form";
+
 function Card() {
   return (
     <div className="bg-white dark:bg-zinc-700 p-8 rounded-lg shadow-md text-center">
@@ -9,6 +11,7 @@ function Card() {
         </p>
         <br />
       </hgroup>
+      <Form />
     </div>
   );
 }
