@@ -1,3 +1,108 @@
 @unocss preflights;
 @unocss default;
 @unocss;
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box; /* 1 */
+    border-width: 0; /* 2 */
+    border-style: solid; /* 2 */
+    border-color: rgb(63 63 70); /* 2 */
+  }
+  hr {
+    border: 1px solid rgb(63 63 70);
+  }
+}
+
+/* Reset CSS based on minireset.css: https://github.com/jgthms/minireset.css */
+html {
+  font-family: ui-monospace, JetBrains Mono, SFMono-Regular, Menlo, Monaco,
+    Consolas, Andale Mono, Liberation Mono, Ubuntu Mono, Courier New, monospace;
+  overflow-y: scroll;
+  box-sizing: border-box;
+}
+html,
+body,
+p,
+ol,
+ul,
+li,
+dl,
+dt,
+dd,
+blockquote,
+figure,
+fieldset,
+legend,
+textarea,
+pre,
+iframe,
+hr,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  font-size: 100%;
+  font-weight: normal;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+ul {
+  list-style: none;
+}
+button,
+input,
+select {
+  margin: 0;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* 1 */
+  border-width: 0; /* 2 */
+  border-style: solid; /* 2 */
+  border-color: rgb(228 228 231); /* 2 */
+}
+img,
+video {
+  height: auto;
+  max-width: 100%;
+}
+iframe {
+  border: 0;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+td,
+th {
+  padding: 0;
+}
+a {
+  color: #3273dc;
+  text-decoration-line: none;
+}
+button {
+  background-color: inherit;
+}
+hr {
+  border: 1px solid rgb(228 228 231);
+}
