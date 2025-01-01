@@ -2,8 +2,17 @@ import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 import fs from "fs";
 import sharp from "sharp";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
 const UPLOAD_DIR = path.resolve(process.cwd(), "public/uploads");
+const S3 = new S3Client({
+  region: 'auto',
+  endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+  credentials: {
+    accessKeyId: process.env.R2_ACCESS_KEY as string,
+    secretAccessKey: process.env.R2_SECRET_KEY as string,
+  },
+});
 
 export const POST = async (req: NextRequest) => {
   const formData = await req.formData();
@@ -29,8 +38,13 @@ export const POST = async (req: NextRequest) => {
       .toFormat("webp")
       .toBuffer();
 
-    const outputFilePath = path.resolve(UPLOAD_DIR, `${realFilename}.webp`);
-    fs.writeFileSync(outputFilePath, outputBuffer);
+    const command = new PutObjectCommand({
+      Bucket: process.env.R2_BUCKET_NAME,
+      Key: `images/${realFilename}.webp`,
+      Body: outputBuffer,
+      ContentType: "image/webp"
+    });
+    await S3.send(command);
 
     return NextResponse.json({
       success: true,
