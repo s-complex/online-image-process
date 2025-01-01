@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
-import fs from "fs";
 import sharp from "sharp";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
-const UPLOAD_DIR = path.resolve(process.cwd(), "public/uploads");
 const S3 = new S3Client({
   region: 'auto',
   endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
@@ -27,12 +25,9 @@ export const POST = async (req: NextRequest) => {
 
   const buffer = Buffer.from(await file.arrayBuffer());
 
-  if (!fs.existsSync(UPLOAD_DIR)) {
-    fs.mkdirSync(UPLOAD_DIR, { recursive: true });
-  }
-
   try {
     const realFilename = path.basename(file.name, path.extname(file.name));
+    const uploadKey = `images/${realFilename}.webp`;
     const outputBuffer = await sharp(buffer)
       .webp({ quality: 75 })
       .toFormat("webp")
@@ -40,7 +35,7 @@ export const POST = async (req: NextRequest) => {
 
     const command = new PutObjectCommand({
       Bucket: process.env.R2_BUCKET_NAME,
-      Key: `images/${realFilename}.webp`,
+      Key: uploadKey,
       Body: outputBuffer,
       ContentType: "image/webp"
     });
@@ -49,7 +44,7 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json({
       success: true,
       name: `${realFilename}.webp`,
-      url: `/uploads/${realFilename}.webp`,
+      url: `${process.env.R2_BUCKET_URL}/${uploadKey}`,
     });
   } catch (error) {
     console.error("Error processing the image:", error);
