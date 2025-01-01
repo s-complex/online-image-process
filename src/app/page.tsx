@@ -9,8 +9,8 @@ function Card() {
           Compress your image and transform its format, then upload it to
           Cloudflare R2.
         </p>
-        <br />
       </hgroup>
+      <br />
       <Form />
     </div>
   );
@@ -27,7 +27,7 @@ function Footer() {
 export default function Home() {
   return (
     <div className="min-h-svh p-4 flex flex-col items-center justify-center">
-      <div className="flex-1">
+      <div className="flex-1 flex items-center justify-center">
         <Card />
       </div>
       <Footer />
