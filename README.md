@@ -1,5 +1,7 @@
 # Online Image Process
 
+> 后续开发可能会在 [edisonjwa/s3-image-hosting](https://github.com/edisonjwa/s3-image-hosting) 进行（？
+
 突发奇想做的一个小玩具，解放自己为给博文配图而劳累的双手。
 
 Next.js (App Router) + UnoCSS + sharp + @aws-sdk/client-s3
